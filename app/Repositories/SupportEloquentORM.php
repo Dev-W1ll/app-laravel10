@@ -4,23 +4,43 @@ use App\DTO\{
     CreateSupportDTO,
     UpdateSupportDTO
 };
+use App\Models\Support;
 use App\Repositories\SupportRepositoryInterface;
 
 class SupportEloquentORM implements SupportRepositoryInterface
 {
+    public function __construct(
+        protected Support $model
+    ) {}
+
     public function getAll(string $filter = null): array
     {
-        // Código para buscar todos os registros
+        return $this->model
+                    ->where(function ($query) use ($filter) {
+                        if ($filter) {
+                            $query->where('subject', $filter);
+                            $query->orWhere('body', 'like', "%{$filter}%");
+                        }
+                    })
+                    ->all()
+                    ->toArray();
     }
 
     public function findOne(string $id): stdClass|null
     {
-        // Código para buscar um registro pelo ID
+        $support = $this->model->find($id);
+
+        if (!$support) {
+            return null;
+        }
+
+        return (object) $support->toArray();
+
     }
 
     public function delete(string $id): void
     {
-        // Código para excluir um registro pelo ID
+        $this->model->findOrFail($id)->delete();
     }
 
     public function new(CreateSupportDTO $dto): stdClass
