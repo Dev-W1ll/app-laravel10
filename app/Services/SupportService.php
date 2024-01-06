@@ -30,7 +30,6 @@ class SupportService
         return $this->repository->getAll($filter);
     }
 
-
     public function findOne(string $id): stdClass|null
     {
         return $this->repository->findOne($id);
