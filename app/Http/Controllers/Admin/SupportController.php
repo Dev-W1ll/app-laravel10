@@ -14,7 +14,8 @@ class SupportController extends Controller
 {
     public function __construct(
         protected SupportService $service
-    ) {}
+    ) {
+    }
 
     public function index(Request $request)
     {
@@ -34,7 +35,7 @@ class SupportController extends Controller
         // Support::find($id)
         // Support::where('id', $id)->first();
         // Support::where('id', '!=', $id)->first();
-        if(!$support = $this->service->findOne($id)) {
+        if (!$support = $this->service->findOne($id)) {
             return back();
         }
 
@@ -52,13 +53,15 @@ class SupportController extends Controller
             CreateSupportDTO::makeFromRequest($request)
         );
 
-        return redirect()->route('supports.index');
+        return redirect()
+            ->route('supports.index')
+            ->with('message', 'Cadastrado com sucesso!');
     }
 
     public function edit(string $id)
     {
         // if(!$support = $support->where('id', $id)->first()) {
-        if(!$support = $this->service->findOne($id)) {
+        if (!$support = $this->service->findOne($id)) {
             return back();
         }
 
@@ -71,11 +74,13 @@ class SupportController extends Controller
             UpdateSupportDTO::makeFromRequest($request)
         );
 
-        if(!$support) {
+        if (!$support) {
             return back();
         }
 
-        return redirect()->route('supports.index');
+        return redirect()
+            ->route('supports.index')
+            ->with('message', 'Atualizado com sucesso!');;
     }
 
     public function destroy(string $id)
