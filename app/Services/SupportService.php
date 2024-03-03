@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\DTO\Supports\CreateSupportDTO;
 use App\DTO\Supports\UpdateSupportDTO;
-use App\Repositories\PaginationInterface;
-use App\Repositories\SupportRepositoryInterface;
+use App\Repositories\Contracts\PaginationInterface;
+use App\Repositories\Contracts\SupportRepositoryInterface;
 use stdClass;
 
 class SupportService
@@ -31,17 +31,17 @@ class SupportService
         return $this->repository->getAll($filter);
     }
 
-    public function findOne(string $id): stdClass|null
+    public function findOne(string $id): stdClass | null
     {
         return $this->repository->findOne($id);
     }
 
-    public function new(CreateSupportDTO $dto): stdClass
+    public function new (CreateSupportDTO $dto): stdClass
     {
         return $this->repository->new($dto);
     }
 
-    public function update(UpdateSupportDTO $dto): stdClass|null
+    public function update(UpdateSupportDTO $dto): stdClass | null
     {
         return $this->repository->update($dto);
     }
