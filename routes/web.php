@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ReplySupportController;
+use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Site\SiteController;
-use App\Http\Controllers\Admin\{ReplySupportController, SupportController};
+use App\Http\Controllers\Site\SiteController;use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\{ReplySupportController, SupportController};
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/contato', [SiteController::class, 'contact']);
 
@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::post('/supports/{id}/replies', [ReplySupportController::class, 'store'])->name('replies.store');
     Route::get('/supports/{id}/replies', [ReplySupportController::class, 'index'])->name('replies.index');
 
     // Route::resource('/supports', SupportController::class);
