@@ -23,48 +23,34 @@
 
             <!-- Item Container -->
             <div class="flex flex-col gap-3 text-white">
-                <div class="flex flex-col gap-4 rounded p-4 dark:bg-gray-900">
-                    <!-- Profile and Rating -->
-                    <div class="justify flex justify-between">
-                        <div class="flex gap-2">
-                            <div class="h-7 w-7 rounded-full bg-red-500 text-center">CF</div>
-                            <span>Nome do Usuário</span>
+                @forelse ($replies as $reply)
+                    <div class="flex flex-col gap-4 rounded p-4 dark:bg-gray-900">
+                        <!-- Profile and Rating -->
+                        <div class="justify flex justify-between">
+                            <div class="flex gap-2">
+                                <div class="h-7 w-7 rounded-full bg-red-500 text-center">CF</div>
+                                <span>{{ $reply['user']['name'] }}</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            {{ $reply['content'] }}
+                        </div>
+
+                        <div class="flex justify-between">
+                            <span>{{ $reply['created_at'] }}</span>
+                            <form action="{{ route('supports.destroy', $support->id) }}" method="post">
+                                @csrf()
+                                @method('DELETE')
+                                <button
+                                    class="rounded border-b-4 border-red-700 bg-red-500 px-4 py-1 text-white hover:border-red-500 hover:bg-red-400"
+                                    type="submit">Deletar</button>
+                            </form>
                         </div>
                     </div>
-
-                    <div>
-                        Algum texto de resposta aqui
-                    </div>
-
-                    <div class="flex justify-between">
-                        <span>d/m/Y</span>
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-4 rounded p-4 dark:bg-gray-900">
-                    <!-- Profile and Rating -->
-                    <div class="justify flex justify-between">
-                        <div class="flex gap-2">
-                            <div class="h-7 w-7 rounded-full bg-red-500 text-center">CF</div>
-                            <span>Nome do Usuário</span>
-                        </div>
-                    </div>
-
-                    <div>
-                        Algum texto de resposta aqui
-                    </div>
-
-                    <div class="flex justify-between">
-                        <span>d/m/Y</span>
-                        <form action="{{ route('supports.destroy', $support->id) }}" method="post">
-                            @csrf()
-                            @method('DELETE')
-                            <button
-                                class="rounded border-b-4 border-red-700 bg-red-500 px-4 py-1 text-white hover:border-red-500 hover:bg-red-400"
-                                type="submit">Deletar</button>
-                        </form>
-                    </div>
-                </div>
+                @empty
+                    <p>No replies</p>
+                @endforelse
 
                 <div class="py-4">
                     <form action="{{ route('replies.store', $support->id) }}" method="post">
