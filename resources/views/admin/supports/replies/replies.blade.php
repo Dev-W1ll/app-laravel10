@@ -8,13 +8,15 @@
         <div class="flex w-3/4 flex-col gap-2 p-5 px-10 md:w-3/5">
             <div class="flex justify-between">
                 <h1 class="text-lg">Detalhes da Dúvida <b>{{ $support->subject }}</b></h1>
-                <form action="{{ route('supports.destroy', $support->id) }}" method="post">
-                    @csrf()
-                    @method('DELETE')
-                    <button
-                        class="rounded border-b-4 border-red-700 bg-red-500 px-4 py-2 font-bold text-white hover:border-red-500 hover:bg-red-400"
-                        type="submit">Deletar</button>
-                </form>
+                @can('owner', $support->user['id'])
+                    <form action="{{ route('supports.destroy', $support->id) }}" method="post">
+                        @csrf()
+                        @method('DELETE')
+                        <button
+                            class="rounded border-b-4 border-red-700 bg-red-500 px-4 py-2 font-bold text-white hover:border-red-500 hover:bg-red-400"
+                            type="submit">Deletar</button>
+                    </form>
+                @endcan
             </div>
             <ul>
                 <li>Status: <x-status-support :status="$support->status" /></li>
@@ -39,13 +41,17 @@
 
                         <div class="flex justify-between">
                             <span>{{ $reply['created_at'] }}</span>
-                            <form action="{{ route('replies.destroy', [$support->id, $reply['id']]) }}" method="post">
-                                @csrf()
-                                @method('DELETE')
-                                <button
-                                    class="rounded border-b-4 border-red-700 bg-red-500 px-4 py-1 text-white hover:border-red-500 hover:bg-red-400"
-                                    type="submit">Deletar</button>
-                            </form>
+                            @can('owner', $reply['user']['id'])
+                                <form action="{{ route('replies.destroy', [$support->id, $reply['id']]) }}" method="post">
+                                    @csrf()
+                                    @method('DELETE')
+                                    <button
+                                        class="rounded border-b-4 border-red-700 bg-red-500 px-4 py-1 text-white hover:border-red-500 hover:bg-red-400"
+                                        type="submit">Deletar</button>
+                                </form>
+                            @else
+                                --
+                            @endcan
                         </div>
                     </div>
                 @empty
