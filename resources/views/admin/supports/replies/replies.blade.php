@@ -30,7 +30,8 @@
                         <!-- Profile and Rating -->
                         <div class="justify flex justify-between">
                             <div class="flex gap-2">
-                                <div class="h-7 w-7 rounded-full bg-red-500 text-center">CF</div>
+                                <div class="h-7 w-7 rounded-full bg-red-500 text-center">
+                                    {{ getInitials($reply['user']['name']) }}</div>
                                 <span>{{ $reply['user']['name'] }}</span>
                             </div>
                         </div>
