@@ -45,10 +45,12 @@
                                 <td class="whitespace-nowrap px-4 py-2 text-sm">
                                     <div class="flex items-center">
                                         @foreach ($support->replies as $reply)
-                                            <div
-                                                class="-mx-1 h-6 w-6 shrink-0 rounded-full border-2 border-white bg-green-500 object-cover dark:border-gray-700">
-                                                {{ getInitials($reply['user']['name']) }}
-                                            </div>
+                                            @if ($loop->index < 4)
+                                                <div
+                                                    class="-mx-1 h-6 w-6 shrink-0 rounded-full border-2 border-white bg-green-500 object-cover dark:border-gray-700">
+                                                    {{ getInitials($reply['user']['name']) }}
+                                                </div>
+                                            @endif
                                         @endforeach
                                     </div>
                                 </td>
