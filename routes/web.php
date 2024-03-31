@@ -16,13 +16,13 @@ use App\Http\Controllers\Site\SiteController;use Illuminate\Support\Facades\Rout
 |
  */
 
-Route::get('/contato', [SiteController::class, 'contact']);
+// Route::get('/contato', [SiteController::class, 'contact']);
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
