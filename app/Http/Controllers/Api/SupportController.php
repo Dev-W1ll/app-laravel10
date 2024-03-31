@@ -44,7 +44,9 @@ class SupportController extends Controller
             CreateSupportDTO::makeFromRequest($request)
         );
 
-        return new SupportResource($support);
+        return (new SupportResource($support))
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -52,9 +54,9 @@ class SupportController extends Controller
      */
     public function show(string $id)
     {
-        if(!$support = $this->service->findOne($id)) {
+        if (!$support = $this->service->findOne($id)) {
             return response()->json([
-                'error' => 'Not Found'
+                'error' => 'Not Found',
             ], Response::HTTP_NOT_FOUND);
         }
 
@@ -72,7 +74,7 @@ class SupportController extends Controller
 
         if (!$support) {
             return response()->json([
-                'error' => 'Not Found'
+                'error' => 'Not Found',
             ], Response::HTTP_NOT_FOUND);
         }
 
@@ -84,9 +86,9 @@ class SupportController extends Controller
      */
     public function destroy(string $id)
     {
-        if(!$this->service->findOne($id)) {
+        if (!$this->service->findOne($id)) {
             return response()->json([
-                'error' => 'Not Found'
+                'error' => 'Not Found',
             ], Response::HTTP_NOT_FOUND);
         }
 
